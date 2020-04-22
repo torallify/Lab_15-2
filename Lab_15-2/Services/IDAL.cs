@@ -15,5 +15,8 @@ namespace Lab_15_2.Services
         //int UpdateMovieById(Movie mrod);
         int CreateMovie(Movie m);
         int DeleteMovieById(int id);
+        IEnumerable<Movie> GetRandomMovie();
+        IEnumerable<Movie> GetRandomMovieByCategory(string category);
+
     }
 }

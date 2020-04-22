@@ -177,5 +177,56 @@ namespace Lab_15_2.Services
             return movie;
         }
 
+        public IEnumerable<Movie> GetRandomMovie()
+        {
+            SqlConnection connection = null;
+            string queryString = "SELECT TOP 1 * FROM Movies ORDER BY NEWID()";
+            IEnumerable<Movie> Movies = null;
+
+            try
+            {
+                connection = new SqlConnection(connectionString);
+                Movies = connection.Query<Movie>(queryString);
+            }
+            catch (Exception e)
+            {
+                //log the error--get details from e
+            }
+            finally //cleanup!
+            {
+                if (connection != null)
+                {
+                    connection.Close(); //explicitly closing the connection
+                }
+            }
+
+            return Movies;
+        }
+
+        public IEnumerable<Movie> GetRandomMovieByCategory(string category)
+        {
+            SqlConnection connection = null;
+            string queryString = "SELECT TOP 1 * FROM Movies WHERE Category = @cat ORDER BY NEWID()";
+            IEnumerable<Movie> Movies = null;
+
+            try
+            {
+                connection = new SqlConnection(connectionString);
+                Movies = connection.Query<Movie>(queryString, new { cat = category });
+            }
+            catch (Exception e)
+            {
+                //log the error--get details from e
+            }
+            finally //cleanup!
+            {
+                if (connection != null)
+                {
+                    connection.Close(); //explicitly closing the connection
+                }
+            }
+
+            return Movies;
+        }
     }
 }
